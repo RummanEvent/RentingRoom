@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Room Rental Survey – Political Collective</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap');
+
+    :root {
+      --ink: #1a1a1a;
+      --paper: #f7f5f0;
+      --accent: #c94b2e;
+      --accent-light: #fdf0ed;
+      --border: #d4cfc6;
+      --muted: #6e6860;
+      --success: #2a6e4a;
+      --card: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .container { max-width: 720px; margin: 0 auto; }
+
+    header {
+      border-top: 4px solid var(--accent);
+      padding-top: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+
+    .intro {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--muted);
+      border-left: 3px solid var(--border);
+      padding-left: 1rem;
+    }
+
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid #edc6bd;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .info-box strong {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.4rem;
+      color: var(--accent);
+    }
+
+    .info-box ul { padding-left: 1.2rem; margin-top: 0.4rem; }
+    .info-box li { margin-bottom: 0.25rem; color: #5a2a1e; }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title .num {
+      background: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .subsection-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 1.25rem 0 0.6rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .subsection-label.basic { color: var(--ink); background: #f0ede8; }
+    .subsection-label.profitable { color: #1a4d2e; background: #e6f4ec; }
+    .subsection-label.nonprofit { color: #2c3e7a; background: #eaecf8; }
+
+    .field { margin-bottom: 1.4rem; }
+    .field:last-child { margin-bottom: 0; }
+
+    label.field-label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .hint {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      font-style: italic;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 0.6rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #faf9f7;
+      color: var(--ink);
+      transition: border-color 0.15s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus { border-color: var(--accent); background: #fff; }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      font-size: 0.875rem;
+      line-height: 1.4;
+    }
+
+    .option-item:hover { border-color: var(--accent); background: var(--accent-light); }
+
+    .option-item input[type="radio"],
+    .option-item input[type="checkbox"] {
+      width: auto;
+      margin-top: 0.15rem;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .option-item.sub {
+      margin-left: 1.5rem;
+      background: #faf9f7;
+      font-size: 0.84rem;
+    }
+
+    .conditional {
+      display: none;
+      margin-top: 0.75rem;
+      padding: 0.9rem 1rem;
+      background: #faf9f7;
+      border-radius: 6px;
+      border: 1px dashed var(--border);
+    }
+
+    .conditional.visible { display: block; }
+
+    .submit-wrap { margin-top: 2rem; text-align: center; }
+
+    button[type="submit"] {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.85rem 2.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    button[type="submit"]:hover { background: #a83921; transform: translateY(-1px); }
+
+    .success-msg {
+      display: none;
+      background: #edf7f2;
+      border: 1px solid #a3d4b8;
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--success);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-strip {
+      margin-top: 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--ink);
+      border-radius: 10px;
+      color: #c8c4bc;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+
+    .contact-strip strong { color: white; font-family: 'Space Grotesk', sans-serif; display: block; margin-bottom: 0.3rem; font-size: 0.9rem; }
+    .contact-strip a { color: #f0a090; text-decoration: none; }
+    .contact-strip a:hover { text-decoration: underline; }
+
+    @media (max-width: 500px) {
+      .section { padding: 1.25rem; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Member Survey — June 2026</p>
+    <h1>Should We Rent a Collective Room?</h1>
+    <p class="intro">
+      We have an opportunity to rent a space for our political collective.
+      This survey collects your opinions so we can make a transparent, collective decision together.
+      Please answer honestly — every voice counts.
+    </p>
+  </header>
+
+  <!-- Context -->
+  <div class="info-box">
+    <strong>The Opportunity</strong>
+    We are considering renting a room, approximately the same size as <em>Malebeo</em>, at around €700/month (warm) in either Neustädt or Pieschen. The rent would probably start in approximately <strong>2 months</strong>.
+  </div>
+
+  <form id="surveyForm" novalidate>
+
+    <!-- 1. The Opportunity -->
+    <div class="section">
+      <div class="section-title"><span class="num">1</span> The Opportunity — Renting a Room</div>
+
+      <!-- 1.1 -->
+      <div class="field">
+        <label class="field-label">1.1 — Are you open to the idea of us renting a room?</label>
+        <div class="options-group">
+          <label class="option-item">
+            <input type="radio" name="openToRent" value="yes" onclick="toggleConditional('onlyIfCondition', false)" /> Yes
+          </label>
+          <label class="option-item">
+            <input type="radio" name="openToRent" value="only_if" onclick="toggleConditional('onlyIfCondition', true)" /> Only if…
+          </label>
+          <label class="option-item">
+            <input type="radio" name="openToRent" value="no" onclick="toggleConditional('onlyIfCondition', false)" /> No
+          </label>
+        </div>
+        <div class="conditional" id="onlyIfCondition">
+          <label class="field-label">Please describe your conditions:</label>
+          <textarea name="onlyIfText" placeholder="What would need to be true for you to agree?"></textarea>
+        </div>
+      </div>
+
+      <!-- 1.2 -->
+      <div class="field">
+        <label class="field-label">1.2 — Do you have a <strong>veto</strong> against this idea?</label>
+        <div class="options-group">
+          <label class="option-item">
+            <input type="radio" name="veto" value="yes" onclick="toggleConditional('vetoExplain', true)" /> Yes
+          </label>
+          <label class="option-item">
+            <input type="radio" name="veto" value="no" onclick="toggleConditional('vetoExplain', false)" /> No
+          </label>
+        </div>
+        <div class="conditional" id="vetoExplain">
+          <label class="field-label">Please explain your veto:</label>
+          <textarea name="vetoText" placeholder="Your reasons..."></textarea>
+        </div>
+      </div>
+
+      <!-- 1.3 -->
+      <div class="field">
+        <label class="field-label">1.3 — Would you be open to the idea <strong>only if</strong> other interested groups join and we can split the cost?</label>
+        <div class="options-group">
+          <label class="option-item"><input type="radio" name="splitGroups" value="yes" /> Yes, only then</label>
+          <label class="option-item"><input type="radio" name="splitGroups" value="either" /> I'm open either way</label>
+          <label class="option-item"><input type="radio" name="splitGroups" value="no" /> No, not relevant for my decision</label>
+        </div>
+      </div>
+
+      <!-- 1.4 -->
+      <div class="field">
+        <label class="field-label">1.4 — Would you be open to the idea <strong>only if</strong> we find donations that cover the full rent?</label>
+        <div class="options-group">
+          <label class="option-item"><input type="radio" name="donationCondition" value="yes" /> Yes, only then</label>
+          <label class="option-item"><input type="radio" name="donationCondition" value="either" /> I'm open either way</label>
+          <label class="option-item"><input type="radio" name="donationCondition" value="no" /> No, not relevant for my decision</label>
+        </div>
+      </div>
+
+      <!-- 1.5 -->
+      <div class="field">
+        <label class="field-label">1.5 — Would you be open to the idea <strong>only if</strong> a trial phase is possible (e.g. 3 months)?</label>
+        <p class="hint">Note: a trial phase has not been confirmed yet — we are gauging interest.</p>
+        <div class="options-group">
+          <label class="option-item"><input type="radio" name="trialCondition" value="yes" /> Yes, I'd prefer a trial phase first</label>
+          <label class="option-item"><input type="radio" name="trialCondition" value="either" /> I'm open either way</label>
+          <label class="option-item"><input type="radio" name="trialCondition" value="no" /> No, not a condition for me</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Financial Contribution -->
+    <div class="section">
+      <div class="section-title"><span class="num">2</span> Financial Contribution</div>
+
+      <div class="field">
+        <label class="field-label">2.1 — Are you able to contribute to the rent with a <strong>monthly commitment</strong>?</label>
+        <div class="options-group">
+          <label class="option-item">
+            <input type="radio" name="canContribute" value="yes" onclick="toggleConditional('contributionAmount', true)" /> Yes
+          </label>
+          <label class="option-item">
+            <input type="radio" name="canContribute" value="maybe" onclick="toggleConditional('contributionAmount', true)" /> Maybe / irregularly
+          </label>
+          <label class="option-item">
+            <input type="radio" name="canContribute" value="no" onclick="toggleConditional('contributionAmount', false)" /> No, I cannot commit financially
+          </label>
+        </div>
+        <div class="conditional" id="contributionAmount">
+          <label class="field-label">How much could you contribute per month? (€)</label>
+          <input type="number" name="monthlyAmount" placeholder="e.g. 20" min="1" />
+          <p class="hint" style="margin-top:0.4rem;">Even small amounts help — no pressure to give more than you can.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">2.2 — What is your personal financial capacity or willingness to contribute?</label>
+        <textarea name="financialCapacity" placeholder="E.g., 'I can commit €50/month but might need flexibility after 6 months', or 'I'm limited to €10-15/month'..."></textarea>
+        <p class="hint" style="margin-top:0.4rem;">Please be honest about what works for your situation. This helps us plan realistically.</p>
+      </div>
+    </div>
+
+    <!-- 3. Responsibilities -->
+    <div class="section">
+      <div class="section-title"><span class="num">3</span> Responsibilities in the Room</div>
+      <p class="hint">In which areas do you see yourself taking responsibility? Select all that apply.</p>
+
+      <!-- 3a Basic -->
+      <div class="field">
+        <span class="subsection-label basic">a. Basic Responsibilities</span>
+        <div class="options-group" style="margin-top:0.5rem;">
+          <label class="option-item"><input type="checkbox" name="resp_basic" value="funding" /> Securing funding</label>
+          <label class="option-item"><input type="checkbox" name="resp_basic" value="admin" /> Room administration (contracts, bills)</label>
+          <label class="option-item"><input type="checkbox" name="resp_basic" value="keys" /> Key responsibilities</label>
+          <label class="option-item"><input type="checkbox" name="resp_basic" value="equipment" /> Equipment</label>
+          <label class="option-item"><input type="checkbox" name="resp_basic" value="decoration" /> Decoration</label>
+        </div>
+      </div>
+
+      <!-- 3b Profitable -->
+      <div class="field">
+        <span class="subsection-label profitable">b. Profitable Activities</span>
+        <div class="options-group" style="margin-top:0.5rem;">
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="public_events" /> Public events</label>
+          <label class="option-item sub"><input type="checkbox" name="resp_profit" value="concerts" /> ↳ Concerts / Jam sessions</label>
+          <label class="option-item sub"><input type="checkbox" name="resp_profit" value="cinema" /> ↳ Cinema</label>
+          <label class="option-item sub"><input type="checkbox" name="resp_profit" value="talks" /> ↳ Talks</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="coworking" /> Co-working space (networking / advertising)</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="game_evening" /> Game evenings (chess, tabula, …)</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="tea_cake" /> Weekly tea &amp; cake day</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="food_prep" /> Preparing food for selling</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="food_selling" /> Selling food and drinks</label>
+          <label class="option-item"><input type="checkbox" name="resp_profit" value="clothes_swap" /> Clothes swap</label>
+        </div>
+        <div style="margin-top:0.75rem;">
+          <label class="field-label">Your own ideas for profitable activities:</label>
+          <input type="text" name="profitIdeas" placeholder="e.g. workshops, zine fair, …" />
+        </div>
+      </div>
+
+      <!-- 3c Non-profitable -->
+      <div class="field">
+        <span class="subsection-label nonprofit">c. Non-Profitable Activities</span>
+        <div class="options-group" style="margin-top:0.5rem;">
+          <label class="option-item"><input type="checkbox" name="resp_nonprofit" value="crafting" /> Crafting</label>
+          <label class="option-item"><input type="checkbox" name="resp_nonprofit" value="language_groups" /> Language groups</label>
+          <label class="option-item"><input type="checkbox" name="resp_nonprofit" value="reading_circles" /> Reading circles</label>
+          <label class="option-item"><input type="checkbox" name="resp_nonprofit" value="plenums" /> Plenums</label>
+          <label class="option-item"><input type="checkbox" name="resp_nonprofit" value="food_sharing" /> Food sharing</label>
+        </div>
+        <div style="margin-top:0.75rem;">
+          <label class="field-label">Your own ideas for non-profitable activities:</label>
+          <input type="text" name="nonprofitIdeas" placeholder="e.g. workshops, discussion groups, …" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="option-item" style="border:1px solid var(--border);border-radius:6px;padding:0.55rem 0.75rem;">
+          <input type="checkbox" name="resp_none" value="none" /> None of the above
+        </label>
+      </div>
+    </div>
+
+    <!-- Open feedback -->
+    <div class="section">
+      <div class="section-title"><span class="num">4</span> Any Other Thoughts?</div>
+      <div class="field">
+        <label class="field-label">Questions, concerns, proposals, or anything else you'd like the collective to consider:</label>
+        <textarea name="openFeedback" style="min-height:110px;" placeholder="Write freely…"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit">Submit My Response →</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      ✅ Thank you — your response has been recorded. The collective appreciates your input!
+    </div>
+
+  </form>
+
+  <!-- Contact strip -->
+  <div class="contact-strip">
+    <strong>Questions or contact</strong>
+    If you have questions about this survey or the room project, reach out to the collective organisers.
+    <br/>
+    <em style="font-size:0.8rem;color:#8a8480;">Please paste your contact information here before sharing this form.</em>
+  </div>
+
+</div>
+
+<script>
+  function toggleConditional(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('visible', show);
+  }
+
+  document.getElementById('surveyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('successMsg').style.display = 'block';
+    this.querySelectorAll('button[type="submit"]').forEach(b => b.disabled = true);
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
